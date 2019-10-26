@@ -7,27 +7,41 @@
           <List v-bind="{ items }" />
         </div>
       </div>
-      <div class="col-5">
+      <div class="col-5 q-gutter-sm">
         <h2 class="text-negative">{{ total | money }}</h2>
         <Client v-model="cpf" />
-        <NewProduct />
+
+        <hr />
+
+        <NewProduct @input="onNewProduct" />
+
+        <hr>
+
+        <div class="q-m-lg">
+          <q-btn @click="save" label="Encerrar Compra" size="lg" color="primary" class="full-width" />
+        </div>
       </div>
     </div>
+    <DialogSuccess @hide="resetCart" v-if="hasResultData" :data="resultData" />
   </q-page>
 </template>
 
 <script>
-import { reduce } from 'lodash-es'
+import { reduce, isEmpty } from 'lodash-es'
 import List from './List'
 import Client from './Client'
-import NewProduct from './NewProduct'
+import NewProduct from './NewProduct/Index'
 import { randomProducts } from './mock'
+import { productBuilder } from './utils'
+import DialogSuccess from './DialogSuccess'
 
 export default {
   name: 'PagePDV',
-  components: { List, Client, NewProduct },
+  components: { List, Client, NewProduct, DialogSuccess },
   data () {
     return {
+      saving: false,
+      resultData: {},
       cpf: '',
       items: randomProducts(this.$store.state.products)
     }
@@ -37,6 +51,38 @@ export default {
       return reduce(this.items, (acc, current) => {
         return acc + current.total
       }, 0)
+    },
+    hasResultData () {
+      return !isEmpty(this.resultData)
+    }
+  },
+  watch: {
+    saving (val) {
+      (val)
+        ? this.$q.loading.show({
+          message: 'Salvando Carrinho'
+        })
+        : this.$q.loading.hide()
+    }
+  },
+  methods: {
+    onNewProduct (product) {
+      this.items.push(productBuilder(product))
+    },
+    save () {
+      this.saving = true
+
+      setTimeout(() => {
+        this.saving = false
+        this.resultData = {
+          value: 999
+        }
+      }, 1000)
+    },
+    resetCart () {
+      this.saving = false
+      this.items = []
+      this.resultData = {}
     }
   }
 }

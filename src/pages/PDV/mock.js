@@ -1,15 +1,13 @@
 import { sampleSize, random } from 'lodash-es'
+import { productBuilder } from './utils'
 
 const randomProducts = products => {
   return sampleSize(products, 7)
     .map(product => {
-      return {
+      return productBuilder({
         ...product,
-        qtd: random(1, 3),
-        get total () {
-          return this.qtd * this.amount
-        }
-      }
+        qtd: random(1, 3)
+      })
     })
 }
 

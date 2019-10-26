@@ -60,6 +60,7 @@ module.exports = function (ctx) {
         'QItemLabel',
         'QCard',
         'QCardSection',
+        'QCardActions',
         'QSeparator',
         'QRouteTab',
         'QTabs',
@@ -67,15 +68,24 @@ module.exports = function (ctx) {
         'QTabPanels',
         'QTabPanel',
         'QForm',
-        'QInput'
+        'QSelect',
+        'QSpinner',
+        'QInput',
+        'QDialog',
+        'QAjaxBar'
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
+        'ClosePopup'
       ],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading',
+        'Dialog',
+        'LoadingBar'
+      ]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie

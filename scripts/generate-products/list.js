@@ -1,4 +1,4 @@
-const { reduce, map, shuffle, isEmpty } = require('lodash')
+const { reduce, map, shuffle, isEmpty, sortBy } = require('lodash')
 
 const combineLists = (list, suffixes = []) => {
   if (isEmpty(suffixes)) {
@@ -24,11 +24,11 @@ const carnes = combineLists([
 ])
 
 const frango = combineLists([
-  'filé de peito',
-  'coxa e sobrecoxa',
-  'frango à passarinho',
-  'tulipa de frango',
-  'filezinho'
+  'Filé de peito',
+  'Coxa e Sobrecoxa',
+  'Frango à Passarinho',
+  'Tulipa de Frango',
+  'Filezinho'
 ], ['Seara', 'Sádia'])
 
 const peixes = [
@@ -55,6 +55,6 @@ const legumes = [
   'Tomate'
 ]
 
-const allProducts = shuffle([...carnes, ...frango, ...peixes, ...legumes])
+const allProducts = sortBy([...carnes, ...frango, ...peixes, ...legumes])
 
 module.exports = { allProducts }
