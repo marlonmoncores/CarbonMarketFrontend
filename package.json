@@ -15,6 +15,8 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
+    "lodash-es": "^4.17.15",
+    "numeral": "^2.0.6",
     "quasar": "^1.0.0",
     "store2": "^2.10.0"
   },
@@ -24,7 +26,12 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^5.0.0"
+    "eslint-plugin-vue": "^5.0.0",
+    "faker": "^4.1.0",
+    "lodash": "^4.17.15",
+    "ora": "^4.0.2",
+    "uuid": "^3.3.3",
+    "write": "^2.0.0"
   },
   "engines": {
     "node": ">= 8.9.0",

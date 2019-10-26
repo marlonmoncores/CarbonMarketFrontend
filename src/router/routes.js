@@ -22,6 +22,13 @@ const routes = [
       { path: 'login', component: () => import('pages/Auth/Login.vue') },
       { path: 'singup', component: () => import('pages/Auth/Singup.vue') }
     ]
+  },
+  {
+    path: '/pdv',
+    component: () => import('layouts/PDV.vue'),
+    children: [
+      { path: '', component: () => import('pages/PDV/Index.vue') }
+    ]
   }
 ]
 
