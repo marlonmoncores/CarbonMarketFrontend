@@ -2,9 +2,25 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
+    redirect: '/app'
+  },
+  {
+    path: '/app',
+    component: () => import('layouts/User.vue'),
+    meta: {
+      needAuth: true
+    },
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/User/Index.vue') }
+    ]
+  },
+  {
+    path: '/auth',
+    redirect: '/auth/login',
+    component: () => import('layouts/Auth.vue'),
+    children: [
+      { path: 'login', component: () => import('pages/Auth/Login.vue') },
+      { path: 'singup', component: () => import('pages/Auth/Singup.vue') }
     ]
   }
 ]
