@@ -6,28 +6,28 @@ const routes = [
   },
   {
     path: '/app',
-    component: () => import('layouts/User.vue'),
+    component: () => import(/* webpackChunkName: "user-layout" */ 'layouts/User.vue'),
     meta: {
       needAuth: true
     },
     children: [
-      { path: '', component: () => import('pages/User/Index.vue') }
+      { path: '', component: () => import(/* webpackChunkName: "user-index" */ 'pages/User/Index.vue') }
     ]
   },
   {
     path: '/auth',
     redirect: '/auth/login',
-    component: () => import('layouts/Auth.vue'),
+    component: () => import(/* webpackChunkName: "auth-layout" */ 'layouts/Auth.vue'),
     children: [
-      { path: 'login', component: () => import('pages/Auth/Login.vue') },
-      { path: 'singup', component: () => import('pages/Auth/Singup.vue') }
+      { path: 'login', component: () => import(/* webpackChunkName: "auth-login" */ 'pages/Auth/Login.vue') },
+      { path: 'singup', component: () => import(/* webpackChunkName: "auth-singup" */ 'pages/Auth/Singup.vue') }
     ]
   },
   {
     path: '/pdv',
-    component: () => import('layouts/PDV.vue'),
+    component: () => import(/* webpackChunkName: "pdv-layout" */ 'layouts/PDV.vue'),
     children: [
-      { path: '', component: () => import('pages/PDV/Index.vue') }
+      { path: '', component: () => import(/* webpackChunkName: "pdv-index" */ 'pages/PDV/Index.vue') }
     ]
   }
 ]
@@ -36,7 +36,7 @@ const routes = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: () => import(/* webpackChunkName: "pages-404" */ 'pages/Error404.vue')
   })
 }
 

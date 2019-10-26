@@ -13,7 +13,7 @@ const applyGuards = (router, store) => {
     if (needAuth(to) && !isLogged(store)) {
       await store.dispatch('auth/ensureAuth')
         .catch(err => {
-          console.warn(err)
+          console.warn(err) // eslint-disable-line
           router.push('/auth')
         })
     }
