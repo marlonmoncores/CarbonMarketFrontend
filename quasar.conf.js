@@ -82,10 +82,16 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
+        'Notify',
         'Loading',
         'Dialog',
         'LoadingBar'
-      ]
+      ],
+      config: {
+        notify: {
+          position: 'top'
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
