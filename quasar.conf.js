@@ -7,6 +7,7 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
+      'auth',
       'filters',
       'axios'
     ],
@@ -71,6 +72,7 @@ module.exports = function (ctx) {
         'QSelect',
         'QSpinner',
         'QInput',
+        'QChip',
         'QDialog',
         'QAjaxBar'
       ],

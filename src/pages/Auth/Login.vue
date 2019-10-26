@@ -34,6 +34,7 @@
 
 <script>
 import { isEmpty } from 'lodash-es'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'PageLogin',
@@ -49,16 +50,20 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('auth', ['setToken']),
     async login () {
       this.$q.loading.show({ message: 'Validando seus dados...' })
       const hide = () => this.$q.loading.hide()
 
       try {
-        await this.$axios.post('/auth', {
+        const { data } = await this.$axios.post('/auth', {
           cpf: this.cpf,
           password: this.password
         })
-        this.$router.replace('/app')
+
+        this.setToken(data.authorization)
+
+        this.$router.replace('/')
       } catch (err) {
         this.$q.notify({
           color: 'red',

@@ -5,3 +5,7 @@ export function setToken (state, value) {
 
   storeToken(value)
 }
+
+export function setUser (state, value) {
+  state.user = { ...value }
+}

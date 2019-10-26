@@ -6,7 +6,11 @@
           Carbon Market
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <q-chip icon="person">
+            {{ user.cpf }}
+          </q-chip>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -17,7 +21,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name: 'MyLayout'
+  name: 'UserLayout',
+  computed: {
+    ...mapState('auth', ['user'])
+  }
 }
 </script>
