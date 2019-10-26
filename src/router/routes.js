@@ -2,7 +2,7 @@
 const routes = [
   {
     path: '/',
-    redirect: '/app'
+    redirect: '/app/scan'
   },
   {
     path: '/app',
@@ -11,7 +11,8 @@ const routes = [
       needAuth: true
     },
     children: [
-      { path: '', component: () => import(/* webpackChunkName: "user-index" */ 'pages/User/Index.vue') }
+      { path: '', component: () => import(/* webpackChunkName: "user-index" */ 'pages/User/Index.vue') },
+      { path: 'scan', component: () => import(/* webpackChunkName: "pdv-scan" */ 'pages/User/Scan/Index.vue') }
     ]
   },
   {

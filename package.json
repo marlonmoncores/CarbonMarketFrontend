@@ -16,10 +16,12 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
+    "is-url": "^1.2.4",
     "lodash-es": "^4.17.15",
     "numeral": "^2.0.6",
     "quasar": "^1.0.0",
-    "store2": "^2.10.0"
+    "store2": "^2.10.0",
+    "vue-qrcode-reader": "^2.1.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
