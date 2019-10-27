@@ -42,7 +42,7 @@ export default {
     return {
       saving: false,
       resultData: {},
-      cpf: '',
+      cpf: this.$store.state.auth.user.cpf || '',
       items: randomProducts(this.$store.state.products)
     }
   },
@@ -54,6 +54,17 @@ export default {
     },
     hasResultData () {
       return !isEmpty(this.resultData)
+    },
+    payload () {
+      return {
+        'cpf': this.cpf,
+        'items': this.items.map(row => {
+          return {
+            itemId: row.id,
+            quantity: row.qtd
+          }
+        })
+      }
     }
   },
   watch: {
@@ -74,6 +85,7 @@ export default {
 
       setTimeout(() => {
         this.saving = false
+
         this.resultData = {
           'id': 2,
           'totalghg': 12345,

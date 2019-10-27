@@ -17,4 +17,9 @@ const ensureAuth = async ({ getters, commit }) => {
   return Promise.reject(new Error('NO_USER'))
 }
 
-export { ensureAuth }
+const loadUserData = async ({ commit }) => {
+  const { data } = await http.get('/me')
+  commit('setUser', data)
+}
+
+export { ensureAuth, loadUserData }
