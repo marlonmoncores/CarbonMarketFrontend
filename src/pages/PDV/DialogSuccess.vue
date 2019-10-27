@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isOpen">
+  <q-dialog v-on="$listeners" v-model="isOpen">
     <q-card>
       <!-- <q-card-section>
         <div class="text-h6">Sucesso</div>
@@ -14,21 +14,14 @@
 
         <q-chip class="co2-ship" color="light-blue-9" text-color="white">
           <q-avatar icon="cloud" color="light-blue-10" text-color="white" />
-          {{ data.totalghg }}
-        </q-chip>
-
-        <q-separator spaced />
-
-        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
-          <q-avatar icon="bookmarks" color="light-blue-10" text-color="white" />
-          {{ data.gradeghg }}
+          {{ data.totalghg | number }}
         </q-chip>
 
         <q-separator spaced />
 
         <q-chip class="co2-ship" color="light-blue-9" text-color="white">
           <q-avatar icon="eco" color="light-blue-10" text-color="white" />
-          {{ data.totalH2O }}
+          {{ data.totalH2O | number }}
         </q-chip>
 
       </q-card-section>
