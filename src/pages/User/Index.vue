@@ -1,73 +1,42 @@
 <template>
   <q-page>
     <div class="flex q-pa-md row q-gutter-col-md">
-      <div class="row col-12">
-        <div class="col-12 col-sm-4">
-          <q-chip class="co2-ship" color="light-blue-9" text-color="white">
-            <q-avatar icon="cloud" color="light-blue-10" text-color="white" />
-            {{ reportData.totalghg | number }}
-            <q-tooltip v-model="tooltips.totalghg">
-              Geração de CO2
-            </q-tooltip>
-          </q-chip>
-        </div>
-        <div class="col-12 col-sm-4">
-          <q-chip class="co2-ship" color="light-blue-9" text-color="white">
-            <q-avatar icon="directions_car" color="light-blue-10" text-color="white" />
-            {{ reportData.km_car | number }}
-            <q-tooltip v-model="tooltips.km_car">
-              Equivalente em KM de um carro
-            </q-tooltip>
-          </q-chip>
-        </div>
-        <div class="col-12 col-sm-4">
-          <q-chip class="co2-ship" color="light-blue-9" text-color="white">
-            <q-avatar icon="invert_colors" color="light-blue-10" text-color="white" />
-            {{ reportData.no_baths }}
-            <q-tooltip v-model="tooltips.no_baths">
-              Equivalente em banhos tomados
-            </q-tooltip>
-          </q-chip>
-        </div>
-      </div>
       <div class="col-12">
-        <q-separator spaced />
         <div class="row">
           <q-select v-model="filter.year" :options="years" label="Ano" class="col-6" />
           <q-select v-model="filter.month" :options="months" label="Mês" class="col-6" />
         </div>
+        <q-separator spaced />
       </div>
+      <Summary v-bind="{ current }" :consumption="consumption" />
     </div>
     <div class="q-pa-md">
-      <q-table
-        title="Produtos"
-        v-bind="{ data, columns }"
-        row-key="id"
-      />
+      <QBtnToggle
+      spread
+        v-model="current"
+        :options="[
+          {label: 'Original', value: 'original'},
+          {label: 'Sugestão', value: 'suggestion'}
+        ]" />
+      <q-separator spaced />
+      <ProductsTable v-bind="{ current }" :data="products" />
     </div>
   </q-page>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { get } from 'lodash-es'
 import { years, months, wait } from './utils'
+import Summary from './Summary'
+import ProductsTable from './ProductsTable'
 
 export default {
   name: 'PageIndex',
+  components: { Summary, ProductsTable },
   data () {
     return {
-      tooltips: {
-        totalghg: true,
-        km_car: true,
-        no_baths: true
-      },
-      reportData: {
-        gradeghg: '',
-        km_car: 0,
-        no_baths: 0,
-        totalH2O: 0,
-        totalghg: 0
-      },
+      current: 'original',
+      reportData: {},
       years: [...years],
       months: [...months],
       filter: {
@@ -81,7 +50,15 @@ export default {
     'filter.month': 'loadData'
   },
   computed: {
-    ...mapState(['products']),
+    consumption () {
+      return this.baseData.consumption || {}
+    },
+    baseData () {
+      return get(this.reportData, [this.current], {})
+    },
+    products () {
+      return this.baseData.items || []
+    },
     columns () {
       return [{
         name: 'name',
@@ -92,9 +69,6 @@ export default {
         label: 'Value',
         field: row => row.amount
       }]
-    },
-    data () {
-      return [...this.products]
     },
     payload () {
       return {
@@ -125,34 +99,10 @@ export default {
       } finally {
         this.$q.loading.hide()
       }
-    },
-    async tour () {
-      const { tooltips } = this
-      await wait()
-      tooltips.totalghg = false
-      await wait()
-      tooltips.km_car = false
-      await wait()
-      tooltips.no_baths = false
     }
   },
   mounted () {
     this.loadData()
-    setTimeout(() => {
-      this.tour()
-    }, 1000)
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.co2-ship {
-  font-size: 2em;
-  display: flex;
-}
-@media (min-width: 600px) {
-  .co2-ship {
-    // display: inline-flex;
-  }
-}
-</style>
