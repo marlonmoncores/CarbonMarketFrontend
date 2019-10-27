@@ -59,6 +59,7 @@ module.exports = function (ctx) {
         'QPopupEdit',
         'QList',
         'QItem',
+        'QBanner',
         'QItemSection',
         'QItemLabel',
         'QTable',

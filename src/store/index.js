@@ -3,18 +3,18 @@ import Vuex from 'vuex'
 
 import auth from './module-auth'
 
-Vue.use(Vuex)
+import * as actions from './actions'
+import * as mutations from './mutations'
 
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation
- */
+Vue.use(Vuex)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     state: {
-      products: require('./products')
+      products: []
     },
+    mutations,
+    actions,
     modules: {
       auth
     },

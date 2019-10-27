@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const http = axios.create({
   baseURL: process.env.API_URL || 'http://localhost:9090/',
-  headers: { 'content-type': 'application/json' }
+  headers: { 'content-type': 'application/json', idMarket: 1 }
 })
 
 const setToken = value => {

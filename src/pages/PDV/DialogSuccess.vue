@@ -1,12 +1,36 @@
 <template>
   <q-dialog v-model="isOpen">
     <q-card>
-      <q-card-section>
-        <div class="text-h6">Alert</div>
-      </q-card-section>
+      <!-- <q-card-section>
+        <div class="text-h6">Sucesso</div>
+      </q-card-section> -->
 
       <q-card-section>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+        <QBanner class="bg-blue text-white">
+          Compra Armazenada com sucesso
+        </QBanner>
+
+        <q-separator spaced />
+
+        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+          <q-avatar icon="cloud" color="light-blue-10" text-color="white" />
+          {{ data.totalghg }}
+        </q-chip>
+
+        <q-separator spaced />
+
+        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+          <q-avatar icon="bookmarks" color="light-blue-10" text-color="white" />
+          {{ data.gradeghg }}
+        </q-chip>
+
+        <q-separator spaced />
+
+        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+          <q-avatar icon="eco" color="light-blue-10" text-color="white" />
+          {{ data.totalH2O }}
+        </q-chip>
+
       </q-card-section>
 
       <q-card-actions align="right">
@@ -29,3 +53,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.co2-ship {
+  font-size: 1.5em;
+}
+</style>

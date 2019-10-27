@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     hasProduct () {
-      return !isEmpty(this.product.id)
+      return !isEmpty(this.product.name)
     }
   },
   watch: {

@@ -75,7 +75,10 @@ export default {
       setTimeout(() => {
         this.saving = false
         this.resultData = {
-          value: 999
+          'id': 2,
+          'totalghg': 12345,
+          'gradeghg': 'A',
+          'totalH2O': 0.2
         }
       }, 1000)
     },
