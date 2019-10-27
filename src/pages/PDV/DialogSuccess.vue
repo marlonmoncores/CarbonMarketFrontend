@@ -20,6 +20,27 @@
         <q-separator spaced />
 
         <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+          <q-avatar icon="bookmarks" color="light-blue-10" text-color="white" />
+          {{ data.gradeghg }}
+        </q-chip>
+
+        <q-separator spaced />
+
+        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+          <q-avatar icon="directions_car" color="light-blue-10" text-color="white" />
+          {{ data.km_car | number }}
+        </q-chip>
+
+        <q-separator spaced />
+
+        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+          <q-avatar icon="invert_colors" color="light-blue-10" text-color="white" />
+          {{ data.no_baths }}
+        </q-chip>
+
+        <q-separator spaced />
+
+        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
           <q-avatar icon="eco" color="light-blue-10" text-color="white" />
           {{ data.totalH2O | number }}
         </q-chip>
