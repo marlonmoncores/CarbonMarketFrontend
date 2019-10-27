@@ -13,20 +13,23 @@
         </div>
       </qrcode-stream>
     </div>
+    <DialogSuccess @hide="resetData" v-if="hasResultData" :data="resultData" />
   </q-page>
 </template>
 
 <script>
-import { trim } from 'lodash-es'
+import { trim, isEmpty } from 'lodash-es'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { parseQRError, wait } from './utils'
 import isUrl from 'is-url'
+import DialogSuccess from '../../PDV/DialogSuccess'
 
 export default {
   name: 'PageScan',
-  components: { QrcodeStream },
+  components: { QrcodeStream, DialogSuccess },
   data () {
     return {
+      resultData: {},
       sending: false,
       success: false,
       camera: 'auto',
@@ -34,7 +37,11 @@ export default {
       error: ''
     }
   },
-
+  computed: {
+    hasResultData () {
+      return !isEmpty(this.resultData)
+    }
+  },
   methods: {
     turnCameraOn () {
       this.camera = 'auto'
@@ -60,11 +67,11 @@ export default {
 
       try {
         const { data } = await this.$axios
-          .post('/user/buy/code', {
+          .post('http://ea34e09c.ngrok.io/user/buy/code', {
             url: this.result
           })
 
-        console.log({ data })
+        this.resultData = data
 
         this.success = true
       } catch (err) {
@@ -88,6 +95,9 @@ export default {
       } catch (error) {
         this.error = parseQRError(error)
       }
+    },
+    resetData () {
+      this.resultData = {}
     }
   }
 }
