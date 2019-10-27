@@ -60,6 +60,7 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QBanner',
+        'QTooltip',
         'QItemSection',
         'QItemLabel',
         'QTable',

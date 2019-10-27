@@ -9,7 +9,7 @@
 
         <div>
           <q-chip small size="sm" color="blue-grey" class="text-white" icon="person">
-            {{ user.cpf }}
+            {{ user.cpf | cpf }}
           </q-chip>
         </div>
       </q-toolbar>

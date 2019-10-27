@@ -47,7 +47,7 @@ export default {
     client () {
       return isEmpty(this.value)
         ? 'Não identificado'
-        : this.value
+        : this._f('cpf')(this.value)
     }
   }
 }

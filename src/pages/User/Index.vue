@@ -6,18 +6,27 @@
           <q-chip class="co2-ship" color="light-blue-9" text-color="white">
             <q-avatar icon="cloud" color="light-blue-10" text-color="white" />
             {{ reportData.totalghg | number }}
+            <q-tooltip v-model="tooltips.totalghg">
+              Geração de CO2
+            </q-tooltip>
           </q-chip>
         </div>
         <div class="col-12 col-sm-4">
           <q-chip class="co2-ship" color="light-blue-9" text-color="white">
             <q-avatar icon="directions_car" color="light-blue-10" text-color="white" />
             {{ reportData.km_car | number }}
+            <q-tooltip v-model="tooltips.km_car">
+              Equivalente em KM de um carro
+            </q-tooltip>
           </q-chip>
         </div>
         <div class="col-12 col-sm-4">
           <q-chip class="co2-ship" color="light-blue-9" text-color="white">
             <q-avatar icon="invert_colors" color="light-blue-10" text-color="white" />
             {{ reportData.no_baths }}
+            <q-tooltip v-model="tooltips.no_baths">
+              Equivalente em banhos tomados
+            </q-tooltip>
           </q-chip>
         </div>
       </div>
@@ -47,6 +56,11 @@ export default {
   name: 'PageIndex',
   data () {
     return {
+      tooltips: {
+        totalghg: true,
+        km_car: true,
+        no_baths: true
+      },
       reportData: {
         gradeghg: '',
         km_car: 0,
@@ -111,10 +125,22 @@ export default {
       } finally {
         this.$q.loading.hide()
       }
+    },
+    async tour () {
+      const { tooltips } = this
+      await wait()
+      tooltips.totalghg = false
+      await wait()
+      tooltips.km_car = false
+      await wait()
+      tooltips.no_baths = false
     }
   },
   mounted () {
     this.loadData()
+    setTimeout(() => {
+      this.tour()
+    }, 1000)
   }
 }
 </script>
