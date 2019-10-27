@@ -58,17 +58,29 @@ export default {
 
       this.sending = true
 
-      await wait(3000)
+      try {
+        const { data } = await this.$axios
+          .post('/user/buy/code', {
+            url: this.result
+          })
 
-      this.sending = false
-      this.success = true
+        console.log({ data })
 
-      await wait(700)
-
-      this.$nextTick(() => {
+        this.success = true
+      } catch (err) {
+        console.error(err)
+        this.sending = false
         this.success = false
-        this.turnCameraOn()
-      })
+        this.error = err.message
+        await wait(1500)
+      } finally {
+        this.$nextTick(() => {
+          this.sending = false
+          this.success = false
+          this.error = false
+          this.turnCameraOn()
+        })
+      }
     },
     async onInit (promise) {
       try {

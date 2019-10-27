@@ -1,13 +1,28 @@
 <template>
   <q-page>
     <div class="flex q-pa-md row q-gutter-col-md">
-      <div class="col-md-6 col-12">
-        <q-chip class="co2-ship" color="light-blue-9" text-color="white">
-          <q-avatar icon="cloud" color="light-blue-10" text-color="white" />
-          9999999
-        </q-chip>
+      <div class="row col-12">
+        <div class="col-12 col-sm-4">
+          <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+            <q-avatar icon="cloud" color="light-blue-10" text-color="white" />
+            {{ reportData.totalghg | number }}
+          </q-chip>
+        </div>
+        <div class="col-12 col-sm-4">
+          <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+            <q-avatar icon="directions_car" color="light-blue-10" text-color="white" />
+            {{ reportData.km_car | number }}
+          </q-chip>
+        </div>
+        <div class="col-12 col-sm-4">
+          <q-chip class="co2-ship" color="light-blue-9" text-color="white">
+            <q-avatar icon="invert_colors" color="light-blue-10" text-color="white" />
+            {{ reportData.no_baths }}
+          </q-chip>
+        </div>
       </div>
-      <div class="col-md-6 col-12">
+      <div class="col-12">
+        <q-separator spaced />
         <div class="row">
           <q-select v-model="filter.year" :options="years" label="Ano" class="col-6" />
           <q-select v-model="filter.month" :options="months" label="Mês" class="col-6" />
@@ -26,14 +41,18 @@
 
 <script>
 import { mapState } from 'vuex'
-import { years, months } from './utils'
+import { years, months, wait } from './utils'
 
 export default {
   name: 'PageIndex',
   data () {
     return {
       reportData: {
-
+        gradeghg: '',
+        km_car: 0,
+        no_baths: 0,
+        totalH2O: 0,
+        totalghg: 0
       },
       years: [...years],
       months: [...months],
@@ -42,6 +61,10 @@ export default {
         month: (months[new Date().getMonth()])
       }
     }
+  },
+  watch: {
+    'filter.year': 'loadData',
+    'filter.month': 'loadData'
   },
   computed: {
     ...mapState(['products']),
@@ -58,17 +81,36 @@ export default {
     },
     data () {
       return [...this.products]
+    },
+    payload () {
+      return {
+        ...this.filter,
+        month: months.indexOf(this.filter.month) + 1
+      }
     }
   },
   methods: {
     async loadData () {
-      const { data } = await this.$axios.put('/user/report', {
-        ...this.filter
+      this.$q.loading.show({
+        message: 'Carregando dados'
       })
 
-      this.reportData = data
+      await wait()
 
-      console.log({ data })
+      try {
+        const { data } = await this.$axios.put('/user/report', {
+          ...this.payload
+        })
+
+        this.reportData = data
+      } catch (err) {
+        this.$q.notify({
+          color: 'red',
+          message: err.message
+        })
+      } finally {
+        this.$q.loading.hide()
+      }
     }
   },
   mounted () {
@@ -79,6 +121,12 @@ export default {
 
 <style lang="scss" scoped>
 .co2-ship {
-  font-size: 3em
+  font-size: 2em;
+  display: flex;
+}
+@media (min-width: 600px) {
+  .co2-ship {
+    // display: inline-flex;
+  }
 }
 </style>

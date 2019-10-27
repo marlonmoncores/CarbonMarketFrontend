@@ -1,3 +1,5 @@
+import { wait } from './Scan/utils'
+
 const YEAR_START = 2019
 const years = Array.from({ length: (new Date().getFullYear() - (YEAR_START - 1)) })
   .map((_, index) => {
@@ -9,4 +11,4 @@ const months = [
   'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
 ]
 
-export { years, months }
+export { years, months, wait }
