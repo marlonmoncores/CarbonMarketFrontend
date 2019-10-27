@@ -40,6 +40,7 @@ export default {
   components: { List, Client, NewProduct, DialogSuccess },
   data () {
     return {
+      error: false,
       saving: false,
       resultData: {},
       cpf: this.$store.state.auth.user.cpf || '',
@@ -68,6 +69,16 @@ export default {
     }
   },
   watch: {
+    error (val) {
+      if (!val || isEmpty(val)) {
+        return
+      }
+
+      this.$q.notify({
+        color: 'red',
+        message: val
+      })
+    },
     saving (val) {
       (val)
         ? this.$q.loading.show({
@@ -80,19 +91,17 @@ export default {
     onNewProduct (product) {
       this.items.push(productBuilder(product))
     },
-    save () {
-      this.saving = true
-
-      setTimeout(() => {
+    async save () {
+      try {
+        this.saving = true
+        const { data } = await this.$axios.post('/market/user/buy', { ...this.payload })
+        this.resultData = data
+      } catch (err) {
+        this.error = err.message
+        console.error(err)
+      } finally {
         this.saving = false
-
-        this.resultData = {
-          'id': 2,
-          'totalghg': 12345,
-          'gradeghg': 'A',
-          'totalH2O': 0.2
-        }
-      }, 1000)
+      }
     },
     resetCart () {
       this.saving = false
