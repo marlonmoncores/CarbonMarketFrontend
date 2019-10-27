@@ -32,6 +32,9 @@ export default {
   name: 'PageIndex',
   data () {
     return {
+      reportData: {
+
+      },
       years: [...years],
       months: [...months],
       filter: {
@@ -56,6 +59,20 @@ export default {
     data () {
       return [...this.products]
     }
+  },
+  methods: {
+    async loadData () {
+      const { data } = await this.$axios.put('/user/report', {
+        ...this.filter
+      })
+
+      this.reportData = data
+
+      console.log({ data })
+    }
+  },
+  mounted () {
+    this.loadData()
   }
 }
 </script>
