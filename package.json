@@ -17,7 +17,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "is-url": "^1.2.4",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "numeral": "^2.0.6",
     "quasar": "^1.0.0",
     "store2": "^2.10.0",
